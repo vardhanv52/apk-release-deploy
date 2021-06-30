@@ -142,17 +142,8 @@ def get_app(release_dir):
     with(open(output_path)) as app_output:
         json_data = json.load(app_output)
 
-    apk_details_key = ''
-    if 'apkInfo' in json_data[0]:
-        apk_details_key = 'apkInfo'
-    elif 'apkData' in json_data[0]:
-        apk_details_key = 'apkData'
-    else:
-        print("Failed: parsing json in output file")
-        return None, None
-
-    app_version = json_data[0][apk_details_key]['versionName']
-    app_file = os.path.join(release_dir, json_data[0][apk_details_key]['outputFile'])
+    app_version = json_data['elements'][0]['versionName']
+    app_file = os.path.join(release_dir, json_data['elements'][0]['outputFile'])
     return app_version, app_file
 
 
